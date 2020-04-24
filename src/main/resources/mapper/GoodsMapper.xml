@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hezhuze.mapper.GoodsMapper">
+	<insert id="insertGoods" parameterType="com.hezhuze.bean.Goods">
+		insert into goods values(#{id},#{name},#{price},#{sales});
+	</insert>
+	<select id="selectAll" parameterType="map" resultType="com.hezhuze.bean.Goods">
+		select * from goods 
+		<where>
+			<if test="max>min and max!=null and min!=null ">
+				price >=#{min} and price&lt;=#{max}
+			</if>
+			<if test="smax>smin and smax!=null and smin!=null">
+				and sales >=#{smin} and sales&lt;=#{smax}
+			</if>
+		</where>
+		<if test="column!=nul and column!=''">
+			ORDER BY ${column} ${orders}
+		</if>
+
+	</select>
+</mapper>
